@@ -54,7 +54,9 @@ export class ECS{
 
         this.entities.forEach((entity: Entity, id: string) => {
             entity.getSystems().forEach(system => {
-                system.update(entity,elapsedTime);
+                if(system.enable){
+                    system.update(entity,elapsedTime);
+                }
             });
         });
 

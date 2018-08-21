@@ -1,11 +1,14 @@
 import { Entity } from "./Entity";
+import { ECS } from "./ECS";
 
 export abstract class System{
     
+    private ecs: ECS;
     public enable: boolean;
     private entities: Map<string, Entity>;
 
-    constructor(){
+    constructor(ecs: ECS){
+        this.ecs = ecs;
         this.entities = new Map<string,Entity>();
         this.enable = true;
     }
