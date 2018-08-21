@@ -1,10 +1,12 @@
 import { v1 } from "uuid";
 import { System } from "./System";
 
+interface ComponentType<T> { new(...args: any[]): T }
+
 export class Entity{
 
     private _id: string;
-    private components: Map<string,Object>;
+    private components: Array<Object>;
     private systems: Array<System>;
 
     public get id(): string{
@@ -13,8 +15,18 @@ export class Entity{
 
     constructor(){
         this._id = v1();
-        this.components = new Map<string,Object>();
+        this.components = new Array<Object>();
         this.systems = new Array<System>();
+    }
+
+    private getComponentIndex<T>(type: ComponentType<T>): number {
+        for (let i = 0; i < this.components.length; ++i) {
+            const component = this.components[i];
+            if (component instanceof type) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public addSystem(system: System){
@@ -29,17 +41,25 @@ export class Entity{
         return this.systems;
     }
 
-    public addCompoment (component: Object): void {
-        if(!this.components.has(component.constructor.name))
-            this.components.set(component.constructor.name,component);
-        else console.log("component exists already");
+    public addComponent<T>(type: ComponentType<T>, ...args: any[]): T | null {
+        if (this.hasComponent(type)) { return this.getComponent(type); }
+        const component: T = new type(...args);
+        this.components.push(component);
+        return component;
     }
 
-    public getComponent<T> (componentClass: { new (): T }): T | null{
-        if(this.components.has(componentClass.name))
-            return this.components.get(componentClass.name) as T;
-        
+    public getComponent<T>(type: ComponentType<T>, ...args: any[]): T | null {
+        const index: number = this.getComponentIndex(type);
+        if (index !== -1) {
+            return this.components[index] as T;
+        }
         return null;
+    }
+
+    public delComponent<T>(type: ComponentType<T>): T {
+        const component = this.getComponent(type)!;
+        this.components.splice(this.components.indexOf(component), 1);
+        return component as T;
     }
 
     public dispose():void{
@@ -48,16 +68,9 @@ export class Entity{
         })
     }
 
-    public hasComponents1<T1>(c1:{ new (): T1 }){
-        return this.components.has(c1.name);
+    public hasComponent<T>(type: ComponentType<T>): boolean{
+        return this.getComponentIndex(type) !== -1;
     }
 
-    public hasComponents2<T1,T2>(c1:{ new (): T1}, c2:{ new (): T2 }){
-        return this.components.has(c1.name) && this.components.has(c2.name);
-    }
-
-    public hasComponents3<T1,T2,T3>(c1:{ new (): T1}, c2:{ new (): T2 }, c3:{ new (): T3 }){
-        return this.components.has(c1.name) && this.components.has(c2.name) && this.components.has(c3.name);
-    }
 
 }
