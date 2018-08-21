@@ -1,9 +1,9 @@
 import { Entity } from "./Entity";
 import { ECS } from "./ECS";
 export declare abstract class System {
-    private _ecs;
+    protected _ecs: ECS | null;
     enable: boolean;
-    private entities;
+    protected entities: Map<string, Entity>;
     constructor();
     ecs: ECS;
     addEntity(entity: Entity): void;

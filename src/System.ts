@@ -3,9 +3,9 @@ import { ECS } from "./ECS";
 
 export abstract class System{
     
-    private _ecs: ECS | null;
+    protected _ecs: ECS | null;
     public enable: boolean;
-    private entities: Map<string, Entity>;
+    protected entities: Map<string, Entity>;
 
     constructor(){
         this._ecs = null;
