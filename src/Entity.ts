@@ -41,8 +41,8 @@ export class Entity{
         return this.systems;
     }
 
-    public addComponent<T>(type: ComponentType<T>, ...args: any[]): T | null {
-        if (this.hasComponent(type)) { return this.getComponent(type); }
+    public addComponent<T>(type: ComponentType<T>, ...args: any[]): T {
+        if (this.hasComponent(type)) { return this.getComponent(type)!; }
         const component: T = new type(...args);
         this.components.push(component);
         return component;
