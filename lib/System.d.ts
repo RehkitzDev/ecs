@@ -1,10 +1,11 @@
 import { Entity } from "./Entity";
 import { ECS } from "./ECS";
 export declare abstract class System {
-    private ecs;
+    private _ecs;
     enable: boolean;
     private entities;
-    constructor(ecs: ECS);
+    constructor();
+    ecs: ECS;
     addEntity(entity: Entity): void;
     removeEntity(entity: Entity): void;
     dispose(): void;

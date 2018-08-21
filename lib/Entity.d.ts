@@ -12,7 +12,7 @@ export declare class Entity {
     addSystem(system: System): void;
     removeSystem(system: System): void;
     getSystems(): Array<System>;
-    addComponent<T>(type: ComponentType<T>, ...args: any[]): T | null;
+    addComponent<T>(type: ComponentType<T>, ...args: any[]): T;
     getComponent<T>(type: ComponentType<T>, ...args: any[]): T | null;
     removeComponent<T>(type: ComponentType<T>): T;
     dispose(): void;
