@@ -14,7 +14,7 @@ export declare class Entity {
     getSystems(): Array<System>;
     addComponent<T>(type: ComponentType<T>, ...args: any[]): T | null;
     getComponent<T>(type: ComponentType<T>, ...args: any[]): T | null;
-    delComponent<T>(type: ComponentType<T>): T;
+    removeComponent<T>(type: ComponentType<T>): T;
     dispose(): void;
     hasComponent<T>(type: ComponentType<T>): boolean;
 }

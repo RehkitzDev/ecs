@@ -56,7 +56,7 @@ export class Entity{
         return null;
     }
 
-    public delComponent<T>(type: ComponentType<T>): T {
+    public removeComponent<T>(type: ComponentType<T>): T {
         const component = this.getComponent(type)!;
         this.components.splice(this.components.indexOf(component), 1);
         return component as T;
