@@ -1,7 +1,7 @@
 import { v1 } from "uuid";
 import { System } from "./System";
 
-interface ComponentType<T> { new(...args: any[]): T }
+export interface ComponentType<T> { new(...args: any[]): T }
 
 export class Entity{
 
