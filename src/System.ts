@@ -3,19 +3,14 @@ import { ECS } from "./ECS";
 
 export abstract class System{
     
-    protected _ecs: ECS | null;
+    protected ecs: ECS;
     public enable: boolean;
     protected entities: Map<string, Entity>;
 
-    constructor(){
-        this._ecs = null;
+    constructor(ecs: ECS){
+        this.ecs = ecs;
         this.entities = new Map<string,Entity>();
         this.enable = true;
-    }
-
-    set ecs(ecs: ECS){
-        if(this._ecs == null)
-            this._ecs = ecs;
     }
 
     public addEntity(entity: Entity){

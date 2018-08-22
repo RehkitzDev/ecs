@@ -37,7 +37,6 @@ export class ECS{
     }
 
     public addSystem(system: System){
-        system.ecs = this;
         this.systems.push(system);
         system.init();
 
